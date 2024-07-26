@@ -1,0 +1,10 @@
+{
+  "recommendations": [
+    "charliermarsh.ruff",
+    "eamodio.gitlens",
+    "ms-python.python",
+    "spmeesseman.vscode-taskexplorer",
+    "tamasfe.even-better-toml",
+    "usernamehw.errorlens"
+  ]
+}

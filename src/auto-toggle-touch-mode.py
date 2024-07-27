@@ -6,44 +6,49 @@ Automatically Toggles touch mode when a touchpad is connected or disconnected.
 
 import logging
 import subprocess
-import time
 from pathlib import Path
 
-from evdev import InputDevice, list_devices
+import pyudev
+import pyudev.device
 
 logging.basicConfig(level=logging.INFO)
-
-
-def is_touchpad_present() -> bool:
-    """Check if a touchpad is present among input devices."""
-    devices = (InputDevice(fn).name.lower() for fn in list_devices())
-    return any("touchpad" in device for device in devices)
-
 
 # Get the directory of the current file
 current_file_directory = Path(__file__).resolve().parent
 
-# Initial state of touchpad presence
-touchpad_present = is_touchpad_present()
+# Path to the other script in the same directory
+mode_toggler_path = current_file_directory / "touch-mode-toggle.py"
+
+
+def toggle_mode(device: pyudev.device._device.Device) -> None:
+    """Handle udev events for input devices."""
+    if device.properties.get("ID_INPUT_TOUCHPAD") != "1":
+        return
+
+    if device.properties.get("ACTION") == "add":
+        logging.info("Touchpad detected. Deactivating touch mode...")
+    else:
+        logging.info("Touchpad disconnected. Activating touch mode...")
+    subprocess.call([mode_toggler_path])
+
+
 logging.debug(
     "Auto toggler started",
     extra={
         "cwd": current_file_directory,
-        "Initial touchpad presence": touchpad_present,
     },
 )
 
-mode_toggler_path = current_file_directory / "touch-mode-toggle.py"
-while True:
-    current_touchpad_present = is_touchpad_present()
+# Set up udev monitor
+context = pyudev.Context()
+monitor = pyudev.Monitor.from_netlink(context)
+monitor.filter_by(subsystem="input")
+observer = pyudev.MonitorObserver(monitor, callback=toggle_mode)
+observer.start()
 
-    if current_touchpad_present != touchpad_present:
-        touchpad_present = current_touchpad_present
-        if touchpad_present:
-            logging.info("Touchpad detected. Deactivating touch mode...")
-        else:
-            logging.info("Touchpad disconnected. Activating touch mode...")
-        subprocess.call([mode_toggler_path])
-
-    # Sleep for a longer period to reduce CPU usage
-    time.sleep(1)
+# Keep the script running
+try:
+    while True:
+        pass
+except KeyboardInterrupt:
+    observer.stop()

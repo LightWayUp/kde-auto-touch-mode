@@ -21,7 +21,7 @@ mode_toggler_path = current_file_directory / "touch-mode-toggle.py"
 
 
 def toggle_mode(device: pyudev.device._device.Device) -> None:
-    """Handle udev events for input devices."""
+    """Toggle touch mode based on the device action."""
     if device.properties.get("ID_INPUT_TOUCHPAD") != "1":
         return
 

@@ -1,0 +1,6 @@
+{
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff"
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
+}

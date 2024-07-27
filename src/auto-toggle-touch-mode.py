@@ -20,6 +20,8 @@ current_file_directory = Path(__file__).resolve().parent
 mode_toggler_path = current_file_directory / "touch-mode-toggle.py"
 
 
+# TODO(MRDGH2821): reject further calls done in quick succession. Check `logs.log` for more info.
+# Duplicate calls are happening due to same device being added 3 times with different properties.
 def toggle_mode(device: pyudev.device._device.Device) -> None:
     """Toggle touch mode based on the device action."""
     if device.properties.get("ID_INPUT_TOUCHPAD") != "1":

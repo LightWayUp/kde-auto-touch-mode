@@ -26,7 +26,13 @@ current_file_directory = path.join(path.parent, path.resolve(__file__))
 
 # Initial state of touchpad presence
 touchpad_present = is_touchpad_present()
-logging.debug(touchpad_present)
+logging.debug(
+    "Auto toggler started",
+    extra={
+        "cwd": current_file_directory,
+        "Initial touchpad presence": touchpad_present,
+    },
+)
 
 mode_toggler_path = Path(current_file_directory).joinpath("touch-mode-toggle.py")
 while True:

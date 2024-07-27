@@ -11,7 +11,6 @@ from pathlib import Path
 
 from evdev import InputDevice, list_devices
 
-path = Path()
 logging.basicConfig(level=logging.INFO)
 
 
@@ -22,7 +21,7 @@ def is_touchpad_present() -> bool:
 
 
 # Get the directory of the current file
-current_file_directory = path.join(path.parent, path.resolve(__file__))
+current_file_directory = Path(__file__).resolve().parent
 
 # Initial state of touchpad presence
 touchpad_present = is_touchpad_present()
@@ -34,7 +33,7 @@ logging.debug(
     },
 )
 
-mode_toggler_path = Path(current_file_directory).joinpath("touch-mode-toggle.py")
+mode_toggler_path = current_file_directory / "touch-mode-toggle.py"
 while True:
     current_touchpad_present = is_touchpad_present()
 
@@ -44,7 +43,7 @@ while True:
             logging.info("Touchpad detected. Deactivating touch mode...")
         else:
             logging.info("Touchpad disconnected. Activating touch mode...")
-        subprocess.call([f"{mode_toggler_path}"])
+        subprocess.call([mode_toggler_path])
 
     # Sleep for a longer period to reduce CPU usage
     time.sleep(1)

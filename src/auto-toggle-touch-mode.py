@@ -15,7 +15,7 @@ path = Path()
 logging.basicConfig(level=logging.INFO)
 
 
-def is_touchpad_present() -> None:
+def is_touchpad_present() -> bool:
     """Check if a touchpad is present among input devices."""
     devices = (InputDevice(fn).name.lower() for fn in list_devices())
     return len(tuple(filter((lambda x: "touchpad" in x), devices))) > 0

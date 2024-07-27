@@ -4,6 +4,12 @@ A python script to automatically toggle KDE's `touch mode` when your touchpad is
 
 Inspired by this [thread][Thread].
 
+## Usage
+
+Add `run-script.sh` in System Settings > Autostart
+
+![Add Script in Startup Settings](image.png)
+
 ## Contributing
 
 1. Install [Rye](https://rye.astral.sh/)

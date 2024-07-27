@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
+"""Touch mode Toggle.
 
+Toggles touch mode on KDE Plasma.
+"""
+
+import os
 import subprocess
+
 import gi
 from gi.repository import Gio, GLib
-import os
 
 gi.require_version("Gio", "2.0")
 
@@ -25,7 +30,7 @@ current_mode: str = (
             "TabletMode",
             "--default",
             "auto",
-        ]
+        ],
     )
     .decode(encoding="utf-8")
     .strip()
@@ -41,7 +46,7 @@ if current_mode == "on":
             "--key",
             "TabletMode",
             "off",
-        ]
+        ],
     )
 else:
     subprocess.check_call(
@@ -54,7 +59,7 @@ else:
             "--key",
             "TabletMode",
             "on",
-        ]
+        ],
     )
 
 connection = Gio.bus_get_sync(Gio.BusType.SESSION, None)

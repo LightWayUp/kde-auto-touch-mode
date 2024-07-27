@@ -17,6 +17,11 @@ build-backend = "hatchling.build"
 managed = true
 dev-dependencies = []
 
+[tool.rye.scripts]
+auto-toggle = "./src/auto-toggle-touch-mode.py"
+manual-toggle = "./src/touch-mode-toggle.py"
+
+
 [tool.hatch.metadata]
 allow-direct-references = true
 

@@ -21,6 +21,7 @@ mode_toggler_path = current_file_directory / "touch-mode-toggle.py"
 
 
 # TODO(MRDGH2821): reject further calls done in quick succession. Check `logs.log` for more info.
+# https://github.com/MRDGH2821/kde-auto-touch-mode/issues/1
 # Duplicate calls are happening due to same device being added 3 times with different properties.
 def toggle_mode(device: pyudev.device._device.Device) -> None:
     """Toggle touch mode based on the device action."""

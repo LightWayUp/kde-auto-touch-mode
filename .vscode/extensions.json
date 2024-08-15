@@ -3,6 +3,8 @@
     "bierner.github-markdown-preview",
     "charliermarsh.ruff",
     "eamodio.gitlens",
+    "foxundermoon.shell-format",
+    "ms-python.mypy-type-checker",
     "ms-python.python",
     "spmeesseman.vscode-taskexplorer",
     "tamasfe.even-better-toml",

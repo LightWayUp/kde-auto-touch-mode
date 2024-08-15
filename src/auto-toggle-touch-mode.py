@@ -17,7 +17,7 @@ logging.basicConfig(level=logging.INFO)
 current_file_directory = Path(__file__).resolve().parent
 
 # Path to the other script in the same directory
-mode_toggler_path = current_file_directory / "touch-mode-toggle.py"
+mode_toggler_path = current_file_directory / "toggle-touch-mode.py"
 
 
 # TODO(MRDGH2821): reject further calls done in quick succession. Check `logs.log` for more info.

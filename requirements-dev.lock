@@ -10,9 +10,15 @@
 #   universal: false
 
 -e file:.
+mypy==1.11.1
+mypy-extensions==1.0.0
+    # via mypy
 pycairo==1.26.1
     # via pygobject
 pygobject==3.48.2
     # via kde-auto-touch-mode
+pygobject-stubs==2.11.0
 pyudev==0.24.3
     # via kde-auto-touch-mode
+typing-extensions==4.12.2
+    # via mypy

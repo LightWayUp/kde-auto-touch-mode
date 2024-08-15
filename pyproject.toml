@@ -13,7 +13,7 @@ build-backend = "hatchling.build"
 
 [tool.rye]
 managed = true
-dev-dependencies = []
+dev-dependencies = ["mypy>=1.11.1", "pygobject-stubs>=2.11.0"]
 
 [tool.rye.scripts]
 auto-toggle = "./src/auto-toggle-touch-mode.py"

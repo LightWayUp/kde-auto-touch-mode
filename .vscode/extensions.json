@@ -1,5 +1,6 @@
 {
   "recommendations": [
+    "bierner.github-markdown-preview",
     "charliermarsh.ruff",
     "eamodio.gitlens",
     "ms-python.python",

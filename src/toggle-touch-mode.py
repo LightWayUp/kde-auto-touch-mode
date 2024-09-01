@@ -63,11 +63,13 @@ else:
     )
 
 connection = Gio.bus_get_sync(Gio.BusType.SESSION, None)
+variant = GLib.Variant.new_tuple(GLib.Variant("a{saay}", {"Input": [b"TabletMode"]}))
+# print(variant.get_normal_form())
 Gio.DBusConnection.emit_signal(
     connection,
     None,
     OBJECT_PATH,
     INTERFACE_NAME,
     SIGNAL_NAME,
-    GLib.Variant.new_tuple(GLib.Variant("a{saay}", {"Input": [b"TabletMode"]})),
+    variant,
 )

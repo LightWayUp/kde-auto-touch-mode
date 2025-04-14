@@ -8,8 +8,7 @@ import logging
 import subprocess
 from pathlib import Path
 
-import pyudev
-import pyudev.device
+from pyudev import Device, Context, Monitor, MonitorObserver
 
 logging.basicConfig(level=logging.INFO)
 
@@ -23,7 +22,7 @@ mode_toggler_path = current_file_directory / "toggle-touch-mode.py"
 # TODO(MRDGH2821): reject further calls done in quick succession. Check `logs.log` for more info.
 # https://github.com/MRDGH2821/kde-auto-touch-mode/issues/1
 # Duplicate calls are happening due to same device being added 3 times with different properties.
-def toggle_mode(device: pyudev.device._device.Device) -> None:
+def toggle_mode(device: Device) -> None:
     """Toggle touch mode based on the device action."""
     if device.properties.get("ID_INPUT_TOUCHPAD") != "1":
         return
@@ -43,10 +42,10 @@ logging.debug(
 )
 
 # Set up udev monitor
-context = pyudev.Context()
-monitor = pyudev.Monitor.from_netlink(context)
+context = Context()
+monitor = Monitor.from_netlink(context)
 monitor.filter_by(subsystem="input")
-observer = pyudev.MonitorObserver(monitor, callback=toggle_mode)
+observer = MonitorObserver(monitor, callback=toggle_mode)
 observer.start()
 
 # Keep the script running

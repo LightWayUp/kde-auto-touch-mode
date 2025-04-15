@@ -10,9 +10,6 @@ Add `run-script.sh` in System Settings > Autostart
 
 ![Add Script in Startup Settings](image.png)
 
-> [!WARNING]
-> Auto toggler script has high CPU consumption.
-
 ## Contributing
 
 1. Install [Rye](https://rye.astral.sh/)

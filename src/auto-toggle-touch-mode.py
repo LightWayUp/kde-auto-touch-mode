@@ -44,13 +44,9 @@ logging.debug(
 # Set up udev monitor
 context = Context()
 monitor = Monitor.from_netlink(context)
-monitor.filter_by(subsystem="input")
-observer = MonitorObserver(monitor, callback=toggle_mode)
-observer.start()
-
-# Keep the script running
+monitor.filter_by("input")
 try:
-    while True:
-        pass
+    for device in iter(monitor.poll, None):
+        toggle_mode(device)
 except KeyboardInterrupt:
-    observer.stop()
+    pass

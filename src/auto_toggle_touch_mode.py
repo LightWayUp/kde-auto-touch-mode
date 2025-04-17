@@ -57,6 +57,8 @@ def monitor() -> None:
         if should_configure:
             TabletMode.apply(TabletMode.OFF if action == "add" else TabletMode.ON)
 
+__all__ = []
+
 if __name__ == "__main__":
     logging.debug(
         "Auto toggler started",

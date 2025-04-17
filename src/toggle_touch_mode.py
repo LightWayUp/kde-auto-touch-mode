@@ -92,28 +92,31 @@ class TabletMode(Enum):
             run()
             return mode
 
-def toggle(from_auto_to: TabletMode=TabletMode.ON) -> TabletMode:
-    new_mode = TabletMode.config({
-        TabletMode.AUTO: from_auto_to,
-        TabletMode.ON: TabletMode.OFF,
-        TabletMode.OFF: TabletMode.ON
-    }.get(TabletMode.config()))
+    @staticmethod
+    def apply(mode: TabletModeAlias | None=None) -> bool:
+        if mode is not None:
+            TabletMode.config(mode)
+        connection = Gio.bus_get_sync(Gio.BusType.SESSION)
+        variant = GLib.Variant.new_tuple(GLib.Variant("a{saay}", {"Input": [b"TabletMode"]}))
+        return connection.emit_signal(
+            None,
+            OBJECT_PATH,
+            INTERFACE_NAME,
+            SIGNAL_NAME,
+            variant,
+        )
 
-    connection = Gio.bus_get_sync(Gio.BusType.SESSION)
-    variant = GLib.Variant.new_tuple(GLib.Variant("a{saay}", {"Input": [b"TabletMode"]}))
-    connection.emit_signal(
-        None,
-        OBJECT_PATH,
-        INTERFACE_NAME,
-        SIGNAL_NAME,
-        variant,
-    )
-    return new_mode
+    @staticmethod
+    def apply_toggled(from_auto_to: TabletModeAlias=ON) -> bool:
+        return TabletMode.apply({
+            TabletMode.AUTO: from_auto_to,
+            TabletMode.ON: TabletMode.OFF,
+            TabletMode.OFF: TabletMode.ON
+        }.get(TabletMode.config()))
 
 __all__ = [x.__name__ for x in (
-    TabletMode,
-    toggle
+    TabletMode
 )] + ["TabletModeAlias"]
 
 if __name__ == "__main__":
-    toggle()
+    TabletMode.apply_toggled()

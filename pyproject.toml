@@ -16,8 +16,8 @@ managed = true
 dev-dependencies = ["mypy>=1.11.1", "pygobject-stubs>=2.11.0"]
 
 [tool.rye.scripts]
-auto-toggle = "./src/auto-toggle-touch-mode.py"
-manual-toggle = "./src/touch-mode-toggle.py"
+auto-toggle = "./src/auto_toggle_touch_mode.py"
+manual-toggle = "./src/touch_mode_toggle.py"
 
 [tool.ruff.lint]
 select = ['ALL']

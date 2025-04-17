@@ -8,14 +8,10 @@ from toggle_touch_mode import TabletMode
 
 import time
 import logging
-from pathlib import Path
 
 from pyudev import Device, Context, Monitor
 
 logging.basicConfig(level=logging.INFO)
-
-# Get the directory of the current file
-current_file_directory = Path(__file__).resolve().parent
 
 # TODO(MRDGH2821): reject further calls done in quick succession. Check `logs.log` for more info.
 # https://github.com/MRDGH2821/kde-auto-touch-mode/issues/1
@@ -64,10 +60,5 @@ def monitor() -> None:
 __all__ = []
 
 if __name__ == "__main__":
-    logging.debug(
-        "Auto toggler started",
-        extra={
-            "cwd": current_file_directory,
-        },
-    )
+    logging.debug("Auto toggler started")
     monitor()

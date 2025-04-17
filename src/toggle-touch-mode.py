@@ -92,14 +92,24 @@ class TabletMode(Enum):
             run()
             return mode
 
-TabletMode.config(TabletMode.OFF if TabletMode.config() is TabletMode.ON else TabletMode.ON)
-connection = Gio.bus_get_sync(Gio.BusType.SESSION, None)
-variant = GLib.Variant.new_tuple(GLib.Variant("a{saay}", {"Input": [b"TabletMode"]}))
-Gio.DBusConnection.emit_signal(
-    connection,
-    None,
-    OBJECT_PATH,
-    INTERFACE_NAME,
-    SIGNAL_NAME,
-    variant,
-)
+def toggle(from_auto_to: TabletMode=TabletMode.ON) -> TabletMode:
+    new_mode = TabletMode.config({
+        TabletMode.AUTO: from_auto_to,
+        TabletMode.ON: TabletMode.OFF,
+        TabletMode.OFF: TabletMode.ON
+    }.get(TabletMode.config()))
+
+    connection = Gio.bus_get_sync(Gio.BusType.SESSION, None)
+    variant = GLib.Variant.new_tuple(GLib.Variant("a{saay}", {"Input": [b"TabletMode"]}))
+    Gio.DBusConnection.emit_signal(
+        connection,
+        None,
+        OBJECT_PATH,
+        INTERFACE_NAME,
+        SIGNAL_NAME,
+        variant,
+    )
+    return new_mode
+
+if __name__ == "__main__":
+    toggle()

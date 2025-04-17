@@ -111,5 +111,10 @@ def toggle(from_auto_to: TabletMode=TabletMode.ON) -> TabletMode:
     )
     return new_mode
 
+__all__ = [x.__name__ for x in (
+    TabletMode,
+    toggle
+)] + ["TabletModeAlias"]
+
 if __name__ == "__main__":
     toggle()

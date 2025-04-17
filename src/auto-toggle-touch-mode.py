@@ -4,20 +4,17 @@
 Automatically Toggles touch mode when a touchpad is connected or disconnected.
 """
 
+import toggle_touch_mode
+
 import logging
-import subprocess
 from pathlib import Path
 
-from pyudev import Device, Context, Monitor, MonitorObserver
+from pyudev import Device, Context, Monitor
 
 logging.basicConfig(level=logging.INFO)
 
 # Get the directory of the current file
 current_file_directory = Path(__file__).resolve().parent
-
-# Path to the other script in the same directory
-mode_toggler_path = current_file_directory / "toggle-touch-mode.py"
-
 
 # TODO(MRDGH2821): reject further calls done in quick succession. Check `logs.log` for more info.
 # https://github.com/MRDGH2821/kde-auto-touch-mode/issues/1
@@ -31,7 +28,7 @@ def toggle_mode(device: Device) -> None:
         logging.info("Touchpad detected. Deactivating touch mode...")
     else:
         logging.info("Touchpad disconnected. Activating touch mode...")
-    subprocess.call([mode_toggler_path])
+    toggle_touch_mode.toggle()
 
 
 logging.debug(

@@ -27,7 +27,7 @@ def toggle_mode(device: Device) -> None:
     if device.properties.get("ID_INPUT_TOUCHPAD") != "1":
         return
 
-    if device.properties.get("ACTION") == "add":
+    if device.action == "add":
         logging.info("Touchpad detected. Deactivating touch mode...")
     else:
         logging.info("Touchpad disconnected. Activating touch mode...")

@@ -99,10 +99,9 @@ def toggle(from_auto_to: TabletMode=TabletMode.ON) -> TabletMode:
         TabletMode.OFF: TabletMode.ON
     }.get(TabletMode.config()))
 
-    connection = Gio.bus_get_sync(Gio.BusType.SESSION, None)
+    connection = Gio.bus_get_sync(Gio.BusType.SESSION)
     variant = GLib.Variant.new_tuple(GLib.Variant("a{saay}", {"Input": [b"TabletMode"]}))
-    Gio.DBusConnection.emit_signal(
-        connection,
+    connection.emit_signal(
         None,
         OBJECT_PATH,
         INTERFACE_NAME,

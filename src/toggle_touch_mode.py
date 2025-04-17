@@ -112,7 +112,7 @@ class TabletMode(Enum):
             TabletMode.AUTO: from_auto_to,
             TabletMode.ON: TabletMode.OFF,
             TabletMode.OFF: TabletMode.ON
-        }.get(TabletMode.config()))
+        }[TabletMode.config()])
 
 __all__ = [x.__name__ for x in (
     TabletMode

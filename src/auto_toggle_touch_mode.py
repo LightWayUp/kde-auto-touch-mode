@@ -37,13 +37,17 @@ def monitor() -> None:
     monitor = Monitor.from_netlink(context)
     monitor.filter_by("input")
 
+    action_to_mode_mapping = {
+        "add": TabletMode.OFF,
+        "remove": TabletMode.ON
+    }
     last_mode = ""
     last_time = 0
     for device in iter(monitor.poll, None):
         if device.properties.get("ID_INPUT_TOUCHPAD") != "1":
             continue
         action = device.action
-        if not action in ("add", "remove"):
+        if not action in action_to_mode_mapping:
             continue
 
         now = time.time_ns()
@@ -55,7 +59,7 @@ def monitor() -> None:
             should_configure = True
         last_time = now
         if should_configure:
-            TabletMode.apply(TabletMode.OFF if action == "add" else TabletMode.ON)
+            TabletMode.apply(action_to_mode_mapping[action])
 
 __all__ = []
 

@@ -1,7 +1,7 @@
 #!/bin/sh
 
 script=
-if printf '%s\n' "$0" | grep -E -q -i '(^|\-|_)auto(\-|_|$)'; then
+if basename "$0" | grep -E -q -i '(^|\-|_)auto(\-|_|$)'; then
     script="auto_"
 fi
 
